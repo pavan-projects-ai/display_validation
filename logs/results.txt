@@ -1,0 +1,200 @@
+===== STARTING DISPLAY VALIDATION =====
+Testing: 1920x1080 @60Hz
+===== STARTING DISPLAY VALIDATION =====
+Testing: 1920x1080 @60Hz
+PASS ✅
+Testing: 640x480 @60Hz
+PASS ✅
+Testing: 800x600 @60Hz
+PASS ✅
+Testing: 1024x768 @60Hz
+PASS ✅
+Testing: 1152x864 @60Hz
+PASS ✅
+Testing: 1280x600 @60Hz
+PASS ✅
+Testing: 1280x720 @60Hz
+PASS ✅
+Testing: 1280x768 @60Hz
+PASS ✅
+Testing: 1280x800 @60Hz
+PASS ✅
+Testing: 1280x960 @60Hz
+PASS ✅
+Testing: 1280x1024 @60Hz
+PASS ✅
+Testing: 1360x768 @60Hz
+PASS ✅
+Testing: 1366x768 @60Hz
+PASS ✅
+Testing: 1400x1050 @60Hz
+PASS ✅
+Testing: 1440x900 @60Hz
+PASS ✅
+Testing: 1600x900 @60Hz
+PASS ✅
+Testing: 1680x1050 @60Hz
+PASS ✅
+===== TEST SUMMARY =====
+Total Modes: 17
+Passed: 17
+Failed: 0
+===== STARTING DISPLAY VALIDATION =====
+Testing: 1920x1080 @60Hz
+PASS ✅
+Testing: 640x480 @60Hz
+PASS ✅
+Testing: 800x600 @60Hz
+PASS ✅
+Testing: 1024x768 @60Hz
+PASS ✅
+Testing: 1152x864 @60Hz
+PASS ✅
+Testing: 1280x600 @60Hz
+PASS ✅
+Testing: 1280x720 @60Hz
+PASS ✅
+Testing: 1280x768 @60Hz
+PASS ✅
+Testing: 1280x800 @60Hz
+PASS ✅
+Testing: 1280x960 @60Hz
+PASS ✅
+Testing: 1280x1024 @60Hz
+PASS ✅
+Testing: 1360x768 @60Hz
+PASS ✅
+Testing: 1366x768 @60Hz
+PASS ✅
+Testing: 1400x1050 @60Hz
+PASS ✅
+Testing: 1440x900 @60Hz
+PASS ✅
+Testing: 1600x900 @60Hz
+PASS ✅
+Testing: 1680x1050 @60Hz
+PASS ✅
+===== TEST SUMMARY =====
+Total Modes: 17
+Passed: 17
+Failed: 0
+Restoring original display settings...
+Original display restored successfully ✅
+===== STARTING DISPLAY VALIDATION =====
+Testing: 1920x1080 @60Hz
+PASS
+Testing: 640x480 @60Hz
+PASS
+Testing: 800x600 @60Hz
+PASS
+Testing: 1024x768 @60Hz
+PASS
+Testing: 1152x864 @60Hz
+PASS
+Testing: 1280x600 @60Hz
+PASS
+Testing: 1280x720 @60Hz
+PASS
+Testing: 1280x768 @60Hz
+PASS
+Testing: 1280x800 @60Hz
+PASS
+Testing: 1280x960 @60Hz
+PASS
+Testing: 1280x1024 @60Hz
+PASS
+Testing: 1360x768 @60Hz
+PASS
+Testing: 1366x768 @60Hz
+PASS
+Testing: 1400x1050 @60Hz
+PASS
+Testing: 1440x900 @60Hz
+PASS
+Testing: 1600x900 @60Hz
+PASS
+Testing: 1680x1050 @60Hz
+PASS
+===== TEST SUMMARY =====
+Total Modes: 17
+Passed: 17
+Failed: 0
+Restoring original display settings...
+Original display restored successfully ✅
+===== STARTING DISPLAY VALIDATION =====
+
+[1/17] Running test...
+Testing: 1920x1080 @60Hz
+PASS
+
+[2/17] Running test...
+Testing: 640x480 @60Hz
+PASS
+
+[3/17] Running test...
+Testing: 800x600 @60Hz
+PASS
+
+[4/17] Running test...
+Testing: 1024x768 @60Hz
+PASS
+
+[5/17] Running test...
+Testing: 1152x864 @60Hz
+PASS
+
+[6/17] Running test...
+Testing: 1280x600 @60Hz
+PASS
+
+[7/17] Running test...
+Testing: 1280x720 @60Hz
+PASS
+
+[8/17] Running test...
+Testing: 1280x768 @60Hz
+PASS
+
+[9/17] Running test...
+Testing: 1280x800 @60Hz
+PASS
+
+[10/17] Running test...
+Testing: 1280x960 @60Hz
+PASS
+
+[11/17] Running test...
+Testing: 1280x1024 @60Hz
+PASS
+
+[12/17] Running test...
+Testing: 1360x768 @60Hz
+PASS
+
+[13/17] Running test...
+Testing: 1366x768 @60Hz
+PASS
+
+[14/17] Running test...
+Testing: 1400x1050 @60Hz
+PASS
+
+[15/17] Running test...
+Testing: 1440x900 @60Hz
+PASS
+
+[16/17] Running test...
+Testing: 1600x900 @60Hz
+PASS
+
+[17/17] Running test...
+Testing: 1680x1050 @60Hz
+PASS
+
+===== TEST SUMMARY =====
+Total Modes: 17
+Passed: 17
+Failed: 0
+
+Restoring original display settings...
+Original display restored successfully

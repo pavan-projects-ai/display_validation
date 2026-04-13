@@ -1,120 +1,213 @@
-# 🖥️ Display Settings UI (Windows)
+# 🖥️ Display Validation Framework (Windows)
 
-A simple Python-based GUI application to view and modify display settings such as **resolution**, **rotation**, and **color depth** using Windows APIs.
-
----
-
-## 🚀 Features
-
-* 📺 List all supported display resolutions
-* 🔄 Change screen rotation (0°, 90°, 180°, 270°)
-* 🎨 Modify color depth (16 / 24 / 32-bit)
-* ✅ Safe validation before applying settings
-* 🖥️ Simple and clean UI using Tkinter
+A Python-based **Display Validation Framework** that automatically tests all supported display modes, validates them using Windows APIs, and generates both **debug logs** and **CSV reports**.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Overview
 
-* Python 3.x
-* Tkinter (GUI)
-* pywin32 (Windows API access)
+This project evolved from a simple display settings UI into a **mini validation framework**, simulating real-world display validation workflows.
 
----
-
-## 📦 Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/display-settings-app.git
-cd display-settings-app
-```
-
-### 2. Create virtual environment (optional but recommended)
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
+It ensures that only **driver-supported display modes** are applied and validated, avoiding unsupported configurations.
 
 ---
 
-## ▶️ Run the Application
+## ✨ Features
 
-```bash
-python src/main.py
+* 📺 Fetch all supported display modes using `EnumDisplaySettings`
+* ⚙️ Apply display modes safely using `ChangeDisplaySettings`
+* ✅ Validate configurations using `CDS_TEST`
+* 🔁 Automated testing of all modes
+* ⏱️ Progress indicator during execution
+* 📊 CSV report generation (`results.csv`)
+* 📄 Detailed log file (`results.txt`)
+* 🔄 Restore original display settings after testing
+* ⚡ Delay handling for display stabilization
+
+---
+
+## 🧱 Project Structure
+
+```text
+display-settings-app/
+│
+├── src/
+│   ├── main.py              # Entry point
+│   ├── display_utils.py     # Core display operations
+│   ├── validator.py         # Mode validation logic
+│   ├── test_runner.py       # Test execution engine
+│   └── logger.py            # Logging + CSV reporting
+│
+├── logs/
+│   ├── results.txt          # Debug logs
+│   └── results.csv          # Structured report
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
 ## ⚙️ How It Works
 
-1. The application retrieves available display modes using:
+### 🔄 Execution Flow
 
-   * `EnumDisplaySettings()`
-
-2. User selects:
-
-   * Resolution
-   * Rotation
-   * Color depth
-
-3. Before applying settings:
-
-   * Uses `ChangeDisplaySettings()` with `CDS_TEST` to validate
-
-4. If valid:
-
-   * Applies settings using Windows API
+```text
+main.py
+   ↓
+test_runner.py
+   ↓
+validator.py
+   ↓
+display_utils.py
+   ↓
+Windows API → GPU Driver → Display
+```
 
 ---
 
-## 🧠 Architecture
+### 🔍 Step-by-Step Process
+
+1. Start the framework (`main.py`)
+2. Initialize CSV logging
+3. Save current display configuration
+4. Fetch all supported display modes
+5. Loop through each mode:
+
+   * Apply mode
+   * Validate using `CDS_TEST`
+   * Wait for stabilization
+   * Log result (PASS / FAIL)
+   * Write to CSV
+6. Generate summary report
+7. Restore original display settings
+
+---
+
+## 🧠 Key Concepts
+
+### ✅ Driver-Based Validation
+
+Display modes are not manually combined. Instead, they are fetched using:
+
+```python
+EnumDisplaySettings()
+```
+
+This ensures only **valid, driver-supported configurations** are used.
+
+---
+
+### ✅ Safe Mode Application
+
+Before applying any display mode:
+
+```python
+ChangeDisplaySettings(..., CDS_TEST)
+```
+
+This prevents unsupported configurations.
+
+---
+
+### ✅ Logging vs Reporting
+
+| Type          | Purpose                         |
+| ------------- | ------------------------------- |
+| `results.txt` | Debugging & trace logs          |
+| `results.csv` | Structured reporting & analysis |
+
+---
+
+## ▶️ How to Run
+
+### 1. Navigate to project
+
+```bash
+cd display-settings-app/src
+```
+
+### 2. Activate virtual environment
+
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r ../requirements.txt
+```
+
+### 4. Run the framework
+
+```bash
+python main.py
+```
+
+---
+
+## 📊 Sample Output
+
+### Console
 
 ```text
-UI (Tkinter)
-   ↓
-Application Logic
-   ↓
-Windows API (pywin32)
-   ↓
-Graphics Driver
-   ↓
-GPU → Display
+===== STARTING DISPLAY VALIDATION =====
+
+[1/10] Running test...
+Testing: 1920x1080 @60Hz
+PASS
+```
+
+---
+
+### CSV (`logs/results.csv`)
+
+```text
+Width,Height,RefreshRate,Status,Message
+1920,1080,60,PASS,Applied successfully
+1280,720,60,FAIL,Unsupported configuration
 ```
 
 ---
 
 ## ⚠️ Important Notes
 
-* Works **only on Windows OS**
-* Screen may flicker when applying settings (normal behavior)
-* Unsupported configurations will be rejected safely
+* Works only on **Windows OS**
+* Screen flickering during execution is **normal**
+* Taskbar may temporarily disappear due to display reset
+* Delay is added to allow monitor stabilization
+* Always restores original display settings after execution
 
 ---
 
-## 📸 Screenshot (Optional)
+## 🎯 Use Case
 
-*Add your UI screenshot here*
+This project demonstrates:
+
+* Display mode validation
+* Driver-level API usage
+* Automated testing workflows
+* Logging and reporting mechanisms
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Multi-monitor support (`ChangeDisplaySettingsEx`)
-* Refresh rate selection
-* Restore previous settings option
-* CLI version
+* 🔁 Retry failed modes
+* 🖥️ Multi-monitor validation
+* 📈 Performance metrics tracking
+* 🧾 EDID parsing (advanced)
+* 🎛️ GUI dashboard
 
 ---
 
 ## 📄 License
 
 This project is open-source and free to use.
+
+---
+
+## 🙌 Author
+
+Developed as part of learning and implementing **Display Validation Engineering concepts**.

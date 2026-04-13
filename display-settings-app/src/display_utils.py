@@ -1,45 +1,38 @@
-# Import Windows API modules from pywin32 package
+# Import Windows API modules
 import win32api
 import win32con
 
 
 def get_supported_modes():
     """
-    This function fetches ALL display modes supported by the system.
-
-    Each mode includes:
-    - Resolution (width, height)
-    - Color depth (bits per pixel)
-    - Refresh rate (Hz)
+    Fetch all display modes supported by the system.
 
     These modes come from:
-    - Monitor (EDID)
     - GPU driver
+    - Monitor EDID (indirectly via driver)
     """
 
-    modes = []  # List to store all modes
-    i = 0       # Index used to iterate through modes
+    modes = []
+    i = 0
 
     while True:
         try:
-            # Get display mode at index 'i'
+            # Get mode using index
             dm = win32api.EnumDisplaySettings(None, i)
 
-            # Extract important fields and store in dictionary
+            # Store mode details
             mode = {
-                "width": dm.PelsWidth,             # Screen width (e.g., 1920)
-                "height": dm.PelsHeight,           # Screen height (e.g., 1080)
-                "bits": dm.BitsPerPel,             # Color depth (usually 32)
-                "frequency": dm.DisplayFrequency   # Refresh rate (e.g., 60Hz)
+                "width": dm.PelsWidth,
+                "height": dm.PelsHeight,
+                "bits": dm.BitsPerPel,
+                "frequency": dm.DisplayFrequency
             }
 
-            modes.append(mode)  # Add mode to list
-
-            i += 1  # Move to next mode index
+            modes.append(mode)
+            i += 1
 
         except:
-            # When no more modes exist, EnumDisplaySettings throws exception
-            # We break the loop here
+            # No more modes available
             break
 
     return modes
@@ -49,19 +42,16 @@ def get_unique_modes():
     """
     Remove duplicate modes.
 
-    Sometimes Windows returns repeated modes,
-    so we filter them using a set.
+    Windows may return duplicate entries,
+    so we filter them.
     """
 
-    seen = set()   # To track unique combinations
-    unique = []    # Final filtered list
+    seen = set()
+    unique = []
 
     for m in get_supported_modes():
-
-        # Create unique key for each mode
         key = (m["width"], m["height"], m["bits"], m["frequency"])
 
-        # Add only if not already seen
         if key not in seen:
             seen.add(key)
             unique.append(m)
@@ -69,60 +59,68 @@ def get_unique_modes():
     return unique
 
 
+def get_current_mode():
+    """
+    Get current display configuration.
+
+    Used to restore original settings after testing.
+    """
+
+    dm = win32api.EnumDisplaySettings(None, win32con.ENUM_CURRENT_SETTINGS)
+
+    return {
+        "width": dm.PelsWidth,
+        "height": dm.PelsHeight,
+        "bits": dm.BitsPerPel,
+        "frequency": dm.DisplayFrequency
+    }
+
+
 def apply_mode(mode):
     """
-    Apply a selected display mode safely.
+    Apply a display mode safely.
 
     Steps:
-    1. Load current display settings
-    2. Update with selected mode values
-    3. Test configuration (CDS_TEST)
-    4. Apply if valid
+    1. Set values
+    2. Test using CDS_TEST
+    3. Apply if valid
     """
 
-    # Get current display configuration
+    # Get current display structure
     devmode = win32api.EnumDisplaySettings(
         None,
         win32con.ENUM_CURRENT_SETTINGS
     )
 
-    # Set new resolution
+    # Set new values
     devmode.PelsWidth = mode["width"]
     devmode.PelsHeight = mode["height"]
-
-    # Set color depth
     devmode.BitsPerPel = mode["bits"]
-
-    # Set refresh rate
     devmode.DisplayFrequency = mode["frequency"]
 
-    # Tell Windows which fields we are modifying
+    # Specify modified fields
     devmode.Fields = (
-        win32con.DM_PELSWIDTH |        # Width
-        win32con.DM_PELSHEIGHT |       # Height
-        win32con.DM_BITSPERPEL |       # Color depth
-        win32con.DM_DISPLAYFREQUENCY   # Refresh rate
+        win32con.DM_PELSWIDTH |
+        win32con.DM_PELSHEIGHT |
+        win32con.DM_BITSPERPEL |
+        win32con.DM_DISPLAYFREQUENCY
     )
 
-    # ---------------- TEST PHASE ---------------- #
+    # ---------------- TEST ---------------- #
 
-    # Validate configuration without applying it
     result = win32api.ChangeDisplaySettings(
         devmode,
         win32con.CDS_TEST
     )
 
-    # If not supported → return error
     if result != win32con.DISP_CHANGE_SUCCESSFUL:
-        return False, "Unsupported configuration ❌"
+        return False, "Unsupported configuration"
 
-    # ---------------- APPLY PHASE ---------------- #
+    # ---------------- APPLY ---------------- #
 
-    # Apply actual display settings
     result = win32api.ChangeDisplaySettings(devmode, 0)
 
-    # Check result
     if result == win32con.DISP_CHANGE_SUCCESSFUL:
-        return True, "Display settings applied successfully ✅"
+        return True, "Applied successfully"
     else:
-        return False, f"Failed with error code: {result}"
+        return False, f"Failed with code: {result}"
