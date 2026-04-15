@@ -18,8 +18,10 @@ It ensures that only **driver-supported display modes** are applied and validate
 * ⚙️ Apply display modes safely using `ChangeDisplaySettings`
 * ✅ Validate configurations using `CDS_TEST`
 * 🔁 Automated testing of all modes
-* ⏱️ Progress indicator during execution
-* 📊 CSV report generation (`results.csv`)
+* 🔁 Retry mechanism for failed modes (handles transient failures)
+* ⏱️ Progress indicator with percentage during execution
+* ⏱️ Per-mode timestamp tracking (start time, end time, duration)
+* 📊 CSV report generation (`results.csv`) with detailed metrics
 * 📄 Detailed log file (`results.txt`)
 * 🔄 Restore original display settings after testing
 * ⚡ Delay handling for display stabilization
@@ -34,8 +36,8 @@ display-settings-app/
 ├── src/
 │   ├── main.py              # Entry point
 │   ├── display_utils.py     # Core display operations
-│   ├── validator.py         # Mode validation logic
-│   ├── test_runner.py       # Test execution engine
+│   ├── validator.py         # Mode validation logic (retry + timing)
+│   ├── test_runner.py       # Test execution engine (progress + summary)
 │   └── logger.py            # Logging + CSV reporting
 │
 ├── logs/
@@ -69,17 +71,26 @@ Windows API → GPU Driver → Display
 ### 🔍 Step-by-Step Process
 
 1. Start the framework (`main.py`)
+
 2. Initialize CSV logging
+
 3. Save current display configuration
+
 4. Fetch all supported display modes
+
 5. Loop through each mode:
 
+   * Show progress (`[current/total] %`)
    * Apply mode
    * Validate using `CDS_TEST`
+   * Retry on failure (up to configured attempts)
    * Wait for stabilization
+   * Capture timing (start, end, duration)
    * Log result (PASS / FAIL)
-   * Write to CSV
+   * Write detailed result to CSV
+
 6. Generate summary report
+
 7. Restore original display settings
 
 ---
@@ -107,6 +118,24 @@ ChangeDisplaySettings(..., CDS_TEST)
 ```
 
 This prevents unsupported configurations.
+
+---
+
+### ✅ Retry Handling
+
+Transient failures during mode switching are handled using a retry mechanism, improving reliability.
+
+---
+
+### ✅ Timing Metrics
+
+Each test captures:
+
+* Start time
+* End time
+* Execution duration
+
+This helps in analyzing performance and stability.
 
 ---
 
@@ -154,9 +183,9 @@ python main.py
 ```text
 ===== STARTING DISPLAY VALIDATION =====
 
-[1/10] Running test...
+[1/10] (10.0%) Running test...
 Testing: 1920x1080 @60Hz
-PASS
+PASS (attempt 1)
 ```
 
 ---
@@ -164,9 +193,8 @@ PASS
 ### CSV (`logs/results.csv`)
 
 ```text
-Width,Height,RefreshRate,Status,Message
-1920,1080,60,PASS,Applied successfully
-1280,720,60,FAIL,Unsupported configuration
+Width,Height,ColorDepth,RefreshRate,Status,Message,StartTime,EndTime,DurationSec
+1920,1080,32,60,PASS,Applied successfully,2026-04-15 12:01:00,2026-04-15 12:01:02,2.1
 ```
 
 ---
@@ -189,14 +217,16 @@ This project demonstrates:
 * Driver-level API usage
 * Automated testing workflows
 * Logging and reporting mechanisms
+* Basic performance tracking using timing metrics
 
 ---
 
 ## 🔮 Future Enhancements
 
-* 🔁 Retry failed modes
+* 🎯 Limit test scope (run subset of modes)
+* 🔁 Retry failed modes separately
 * 🖥️ Multi-monitor validation
-* 📈 Performance metrics tracking
+* 📈 Advanced performance metrics
 * 🧾 EDID parsing (advanced)
 * 🎛️ GUI dashboard
 
@@ -210,4 +240,4 @@ This project is open-source and free to use.
 
 ## 🙌 Author
 
-Developed as part of learning and implementing **Display Validation Engineering concepts**.
+Developed as part of learning and implementing display validation concepts.
