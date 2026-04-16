@@ -4,7 +4,7 @@ A Python-based **Display Validation Framework** that automatically tests all sup
 
 ---
 
-## 🚀 Overview
+##  Overview
 
 This project evolved from a simple display settings UI into a **mini validation framework**, simulating real-world display validation workflows.
 
@@ -12,23 +12,26 @@ It ensures that only **driver-supported display modes** are applied and validate
 
 ---
 
-## ✨ Features
+##  Features
 
-* 📺 Fetch all supported display modes using `EnumDisplaySettings`
-* ⚙️ Apply display modes safely using `ChangeDisplaySettings`
-* ✅ Validate configurations using `CDS_TEST`
-* 🔁 Automated testing of all modes
-* 🔁 Retry mechanism for failed modes (handles transient failures)
-* ⏱️ Progress indicator with percentage during execution
-* ⏱️ Per-mode timestamp tracking (start time, end time, duration)
-* 📊 CSV report generation (`results.csv`) with detailed metrics
-* 📄 Detailed log file (`results.txt`)
-* 🔄 Restore original display settings after testing
-* ⚡ Delay handling for display stabilization
+*  Fetch all supported display modes using `EnumDisplaySettings`
+*  Apply display modes safely using `ChangeDisplaySettings`
+*  Validate configurations using `CDS_TEST`
+*  Automated testing of all modes
+*  Retry mechanism for failed modes (handles transient failures)
+*  Progress indicator with percentage during execution
+*  Per-mode timestamp tracking (start time, end time, duration)
+*  CSV report generation (`results.csv`) with detailed metrics
+*  Detailed log file (`results.txt`)
+*  Restore original display settings after testing
+*  Delay handling for display stabilization
+*  Limit test scope (run subset of modes)
+*  Retry failed modes separately
+*  Single mode testing (run specific display configuration) 
 
 ---
 
-## 🧱 Project Structure
+##  Project Structure
 
 ```text
 display-settings-app/
@@ -50,9 +53,9 @@ display-settings-app/
 
 ---
 
-## ⚙️ How It Works
+##  How It Works
 
-### 🔄 Execution Flow
+### Execution Flow
 
 ```text
 main.py
@@ -68,7 +71,7 @@ Windows API → GPU Driver → Display
 
 ---
 
-### 🔍 Step-by-Step Process
+### Step-by-Step Process
 
 1. Start the framework (`main.py`)
 
@@ -95,9 +98,9 @@ Windows API → GPU Driver → Display
 
 ---
 
-## 🧠 Key Concepts
+##  Key Concepts
 
-### ✅ Driver-Based Validation
+### Driver-Based Validation
 
 Display modes are not manually combined. Instead, they are fetched using:
 
@@ -109,7 +112,7 @@ This ensures only **valid, driver-supported configurations** are used.
 
 ---
 
-### ✅ Safe Mode Application
+### Safe Mode Application
 
 Before applying any display mode:
 
@@ -121,13 +124,13 @@ This prevents unsupported configurations.
 
 ---
 
-### ✅ Retry Handling
+### Retry Handling
 
 Transient failures during mode switching are handled using a retry mechanism, improving reliability.
 
 ---
 
-### ✅ Timing Metrics
+### Timing Metrics
 
 Each test captures:
 
@@ -139,7 +142,7 @@ This helps in analyzing performance and stability.
 
 ---
 
-### ✅ Logging vs Reporting
+### Logging vs Reporting
 
 | Type          | Purpose                         |
 | ------------- | ------------------------------- |
@@ -148,7 +151,7 @@ This helps in analyzing performance and stability.
 
 ---
 
-## ▶️ How to Run
+## How to Run
 
 ### 1. Navigate to project
 
@@ -171,12 +174,19 @@ pip install -r ../requirements.txt
 ### 4. Run the framework
 
 ```bash
+### Run for all modes 
 python main.py
+
+### Run for Limit Scope
+python main.py 5  
+
+### Run for specific mode
+python main.py --mode 1920x1080@60
 ```
 
 ---
 
-## 📊 Sample Output
+##  Sample Output
 
 ### Console
 
@@ -199,7 +209,7 @@ Width,Height,ColorDepth,RefreshRate,Status,Message,StartTime,EndTime,DurationSec
 
 ---
 
-## ⚠️ Important Notes
+##  Important Notes
 
 * Works only on **Windows OS**
 * Screen flickering during execution is **normal**
@@ -209,7 +219,7 @@ Width,Height,ColorDepth,RefreshRate,Status,Message,StartTime,EndTime,DurationSec
 
 ---
 
-## 🎯 Use Case
+##  Use Case
 
 This project demonstrates:
 
@@ -221,14 +231,12 @@ This project demonstrates:
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
-* 🎯 Limit test scope (run subset of modes)
-* 🔁 Retry failed modes separately
-* 🖥️ Multi-monitor validation
-* 📈 Advanced performance metrics
-* 🧾 EDID parsing (advanced)
-* 🎛️ GUI dashboard
+*  Multi-monitor validation
+*  Advanced performance metrics
+*  EDID parsing (advanced)
+*  GUI dashboard
 
 ---
 
